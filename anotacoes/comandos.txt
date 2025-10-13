@@ -1,0 +1,4 @@
+composer require livewire/livewire
+php artisan livewire:layout 
+php artisan livewire:make MainComponent
+
