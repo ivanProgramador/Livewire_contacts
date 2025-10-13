@@ -3,6 +3,7 @@ php artisan livewire:layout
 php artisan livewire:make MainComponent
 php artisan make:migration create_contacs_table
 php artisan migrate
+php artisan livewire:make FormContact
 
 
 

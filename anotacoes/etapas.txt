@@ -6,4 +6,6 @@
 6 - criação e conexão estabeliecida copm a base de dados
 7 - tabela criada com a migration    
 8 - titulo estabelecido na classe do componente usando diretivas do livewire 
+9 - componente do formulário dos contatos e lista de contatos criados
+10 - componnetes adicionandos a view principal  
 
