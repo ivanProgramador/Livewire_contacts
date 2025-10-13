@@ -1,0 +1,9 @@
+1 - instalação do laravel 
+2 - instalação do livewire 
+3 - criação do componete principal "app.blade.php"
+4 - bibliotecas adicionadas nos assets e integradas no componente principal
+5 - rota estabacida para o componente principal tipo "Full Page" 
+6 - criação e conexão estabeliecida copm a base de dados
+7 - tabela criada com a migration    
+8 - titulo estabelecido na classe do componente usando diretivas do livewire 
+
