@@ -8,6 +8,7 @@ use Livewire\Component;
 class MainComponent extends Component
 {
     #[Title('Livewire contacts')]
+    
     public function render()
     {
         return view('livewire.main-component');

@@ -1,0 +1,38 @@
+Como se trata de livewire os dados passados pelo formulário, não seram tratados atraves de uma requisição,
+ao inves disso eles seram enviados para uma função publica dentro da classe do componente.
+Quando o botão de gravar é acionado os dados são enviados pelo " wire:submit="newContact" " para dentro do componente
+e lá no componete ele encontra a função validade que vai testar cada uma dessas variaveis com base
+nos requisitos estabelecidos pela minha validação.
+
+Isso não é uma requisição http por isso nao existe uma Request sendo recebida como parametro
+
+se passar esse dados seram gravado no Log onde ue poss verificar se estão corretos  
+
+class FormContact extends Component
+{
+    public $name,$email,$phone;
+
+    public function newContact(){
+
+        //validação de dados
+        
+        $this->Validate([
+             "name"=>"required|min:3|max:50",
+             "email"=>"required|email|min:5|max:50",
+             "phone"=>"required|min:5|max:20"
+        ]);
+
+        //gravando os dados no log pra testes
+        
+        Log::info('Novo contato: '.$this->name.'-'.$this->email.'-'.$this->phone);
+
+    }
+
+    public function render()
+    {
+        return view('livewire.form-contact');
+    }
+}
+
+
+
