@@ -32,7 +32,11 @@
         </div>
 
         @if($error)
-           <div class="alert-danger text-center mt-5 ">
+           <div class="alert-danger text-center mt-5"
+             x-data="{ show:true}"
+             x-show="show"
+             x-init="setTimeout(()=> show = false, 2000)"
+           >
                {{ $error }}
            </div>
         
@@ -40,7 +44,11 @@
 
         
         @if($success)
-           <div class="alert-success text-center mt-5">
+           <div class="alert-success text-center mt-5"
+             x-data="{ show:true}"
+             x-show="show"
+             x-init="setTimeout(()=> show = false, 2000)"
+           >
                {{ $success }}
            </div>
         @endif

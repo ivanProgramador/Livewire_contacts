@@ -1,0 +1,38 @@
+Sempre que o sistema avisava ao  usuario que o contato ja tinha sido cadastrado
+ou que o cadastro tinha sido feito a mensagem ficava fixa na tela, então para corrigir 
+isso foi usado o Alpine.
+
+Se trata de uma lib javascript que vem dentro do livewire, com essa lib eu consegui adicionar alguns
+atributos extras dentro da div que mostra a mensagem 
+
+1 - o x-data transforma a div em um componente então o Alpine assume o controle dela  
+  x-data="{ show:true}"
+
+2 - o "x-show" da um comando de exibição para o componente x-data que foi criado mandando ele ficar na tela
+    e enquanto ele recebe "true" o componente fica visivel  
+      
+   x-show="show"
+
+3 - O "x-init" controla a iniciailização desse componente e ele será inicializado com um setTimeout()
+    que vai receber show e tornar ele falso em 2 segundos.   
+
+   x-init="setTimeout(()=> show = false, 2000)"
+
+
+Aplicando 
+----------------------------------------------------------
+
+   @if($success)
+           <div class="alert-success text-center mt-5"
+             x-data="{ show:true}"
+             x-show="show"
+             x-init="setTimeout(()=> show = false, 2000)"
+           >
+               {{ $success }}
+           </div>
+   @endif
+
+--------------------------------------------------------------------
+
+Eu fiz isso tanto para o success quanto para o error porque não importa se ele são diferentes 
+porque cada a tributo desses e fechado no escopo do elementro que chama eles  
