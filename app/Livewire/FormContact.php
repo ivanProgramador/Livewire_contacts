@@ -51,6 +51,10 @@ class FormContact extends Component
 
             $this->success ="Contato criado com sucesso !";
 
+            //criando um evento 
+            
+            $this->dispatch('contactAdded');
+
            
             
         }else{

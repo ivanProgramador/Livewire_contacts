@@ -1,5 +1,23 @@
 <div class="card p-5">
-    <p>Contacts</p>
-    <hr class="m-0 p-0" >
+
+    <p class="mb-3">Contacts</p>
+
+    @if($contacts->count() === 0 )
+
+      <div class="opacity-50"> Não existem contatos cadastrados </div>
+
+    @else
+        @foreach ($contacts as $contact)
+           <div class="card p-3 mb-1 bg-dark">
+             <div class="row">
+                  <div class="col">Nome:     {{$contact->name}}</div>
+                  <div class="col">E-mail:   {{$contact->email}}</div>
+                  <div class="col">Telefone: {{$contact->phone}}</div>
+             </div>
+         </div>
+       @endforeach
+    @endif
+   
+
  
 </div>

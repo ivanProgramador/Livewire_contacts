@@ -1,0 +1,86 @@
+Comunicação por eventos
+
+A ideia desse projeto e carregar dados para a tela de forma dinamica, 
+mas para que isso aconteça é necessário uma comunicação entre o meu fomulário
+e a minha tabela. se essa comunicação não existir, quando eu adicionar um contato 
+a lista não vai atualizar a menos que o usuário faça um recarregamento da página.
+
+para fazer essa comunicação eu criei um evento dentro do componente do formulario,
+esse evento so vai existir quando o contato for cadastrado com sucesso   
+
+   $this->dispatch('contactAdded');
+
+esse evento sera disparado assim que um conato for cadastrado com sucesso 
+
+-----------------------------------------------------------------------------
+ if($result->wasRecentlyCreated){
+             
+             $this->reset();
+
+            $this->success ="Contato criado com sucesso !";
+         
+            $this->dispatch('contactAdded');
+
+           
+            
+        }else{
+             $this->error ="Esse contato já existe !";
+
+        }
+----------------------------------------------------------------------        
+
+Os dois componentes estão dentro de um componente principal  por isso eles conseguem "ver" os eventos
+que acontecem dentro dele inclusive o " $this->dispatch('contactAdded'); "
+
+Tratando o evento dento do componente Contacts
+
+
+Pra mostrar os contatos na tela assim que o componete da lista é rederizado ele executa a função 
+" $this->updateContacts(); " que consulta o banco e mostra a lista de contatos inicial a novidade aqui 
+é que uso On('') que fica assitindo a renderização e fica atento aos evento que aparecem no meu caso  
+eu apontei ele para o meu evento " #[On('contactAdded')] " e cada vez que ele acontecer o On() atualiza
+a lista novamente sem qua usuario precise recarregar apágina.    
+
+
+ #[On('contactAdded')]
+
+    public function updateContactList(){
+
+      $this->updateContacts();
+
+    }
+
+
+aplicando
+ 
+-----------------------------------------------------------------------
+
+class Contacts extends Component
+{
+    public $contacts;
+    
+    public function mount(){
+        $this->updateContacts();
+    }
+
+    #[On('contactAdded')]
+
+    public function updateContactList(){
+
+      $this->updateContacts();
+
+    }
+
+    private function updateContacts(){
+           $this->contacts = Contact::all();
+    }
+
+    public function render()
+    {
+        return view('livewire.contacts');
+    }
+}
+
+
+
+
