@@ -1,0 +1,119 @@
+Se comunicando com o usuário
+  
+  No caso de uma sistema qquando ele não permite que o usuário faça alguma coisa,
+  por exemplo cadastrar,deletar ou alterar, o usuário deve saber porque isso não 
+  foi permitido então é uma boa prática sempre que possivel, fazer o sistema "conversar"
+  com o usuário.
+
+  No meu projeto eu estabeleci uma regra de negócio onde o usuário pode cadastrar,
+  pessoas diferentes com o mesmo numero, mas nem o nome e nem o email podem se repetir,
+  mas o fato de colocar essa regra dentro do componente não tona ela clara para o usuário.
+
+  NO caso a função " Contact::firstOrCreate() " é uma função que tem um retorno 
+
+  1 - true se deu certo fazer a gravação 
+  2 - false se deu errado fazer a gravação 
+
+  Então eu atribui essa função a variavel publica $result  
+
+----------------------------------------------------------------
+   $result = Contact::firstOrCreate(
+            [
+                'name'=>$this->name,
+                'email'=>$this->email
+            ],
+            [
+                'phone'=>$this->phone 
+            ]
+        );
+------------------------------------------------------------------
+
+Depois da execução dessa função a variavel $result vai receber true ou false
+e eu vou fazer um teste,pra pegar esse valor eu uso a própriedade
+" wasRecentlyCreated " porque se foi crido recenetemente deu certo "true"
+se não foi deu errado " false "   
+
+   if($result->wasRecentlyCreated){
+     
+     se vier true 
+
+    }else{
+
+     se vier false 
+   }
+
+Depois disse criei duas variáveis que vão receber esse resultado e passar o valor dele para a view 
+
+if($result->wasRecentlyCreated){
+     
+      $this->success ="Contato criado com sucesso !";
+    }else{
+
+        $this->error ="Esse contato já existe !";
+   }
+
+
+Então a classe do componente ficou assim 
+
+
+class FormContact extends Component
+{
+
+   #[Validate('required|min:3|max:50') ]
+    public $name;
+
+   #[Validate('required|email|min:5|max:50') ]
+    public $email;
+
+   #[Validate('required|min:5|max:20')]
+    public $phone;
+
+    public $error ="";
+    public $success ="";
+
+   
+
+    public function newContact(){
+
+        $this->validate();
+
+        
+
+       $result = Contact::firstOrCreate(
+            [
+                'name'=>$this->name,
+                'email'=>$this->email
+            ],
+            [
+                'phone'=>$this->phone 
+            ]
+        );
+        
+       
+         
+        //limpando o formulario apos o registro
+        $this->reset();
+
+        //verificando se deu certo adicionar 
+
+        if($result->wasRecentlyCreated){
+
+            $this->success ="Contato criado com sucesso !";
+            
+        }else{
+             $this->error ="Esse contato já existe !";
+
+        }
+
+        
+
+    }
+
+    public function render()
+    {
+        return view('livewire.form-contact');
+    }
+}
+
+
+  

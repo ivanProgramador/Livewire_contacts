@@ -30,6 +30,22 @@
         <div class="text-end">
             <button class="btn btn-secondary px-5">Gravar</button>
         </div>
+
+        @if($error)
+           <div class="alert-danger text-center mt-5 ">
+               {{ $error }}
+           </div>
+        
+        @endif
+
+        
+        @if($success)
+           <div class="alert-success text-center mt-5">
+               {{ $success }}
+           </div>
+        @endif
+
+
             
     </form>
 </div>

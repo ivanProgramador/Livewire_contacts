@@ -19,13 +19,18 @@ class FormContact extends Component
    #[Validate('required|min:5|max:20')]
     public $phone;
 
+    public $error ="";
+    public $success ="";
+
+   
+
     public function newContact(){
 
         $this->validate();
 
         
 
-        Contact::firstOrCreate(
+       $result = Contact::firstOrCreate(
             [
                 'name'=>$this->name,
                 'email'=>$this->email
@@ -35,10 +40,24 @@ class FormContact extends Component
             ]
         );
         
-       
-         
-        //limpando o formulario apos o registro
-        $this->reset();
+        //verificando se deu certo adicionar 
+
+        if($result->wasRecentlyCreated){
+
+              //limpando o formulario apos o registro
+             //ele so limpa depois que der cero gravar porque assim o usuario pode ver o erro que ele cometeu o corrigir 
+             
+             $this->reset();
+
+            $this->success ="Contato criado com sucesso !";
+
+           
+            
+        }else{
+             $this->error ="Esse contato já existe !";
+
+        }
+
         
 
     }
