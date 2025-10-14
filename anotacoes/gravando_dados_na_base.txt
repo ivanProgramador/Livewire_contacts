@@ -1,0 +1,79 @@
+Gravando dados 
+  
+  O livewire é um lib visual por isso e tenho que usar o Eloquent nesse caso 
+  como todas as funções do eomponet estão sendo executadas na classe a função de gravar
+  também será.
+
+  Nesse porrjeto eu estabeleci a segunbdte regra "ocntato podem usar o mesmo numero, mas não podem ter o mesmo nome 
+  ,nem o mesmo e-mail" para traduzir essa regra parara o Eloquent eu usaor a função " firstOrCreate()" que recebe 2 
+  arrays 
+  1 - eu infomo os campos que não podem ser repetidos
+       
+       [
+                'name'=>$this->name,
+                'email'=>$this->email
+       ]
+     
+  2 - eu infomo os campos que podem se repetir 
+
+        [
+                'phone'=>$this->phone 
+        ]
+
+  Aplicando a regra na função 
+
+----------------------------------------------
+  Contact::firstOrCreate(
+            [
+                'name'=>$this->name,
+                'email'=>$this->email
+            ],
+            [
+                'phone'=>$this->phone 
+            ]
+        );
+---------------------------------------------
+
+Aplicando a função dentro da classe do componente 
+
+
+--------------------------------------------------------------------
+class FormContact extends Component
+{
+
+   #[Validate('required|min:3|max:50') ]
+    public $name;
+
+   #[Validate('required|email|min:5|max:50') ]
+    public $email;
+
+   #[Validate('required|min:5|max:20')]
+    public $phone;
+
+    public function newContact(){
+
+        $this->validate();
+
+        Contact::firstOrCreate(
+            [
+                'name'=>$this->name,
+                'email'=>$this->email
+            ],
+            [
+                'phone'=>$this->phone 
+            ]
+        );
+        
+       
+         
+        //limpando o formulario apos o registro
+        $this->reset();
+        
+
+    }
+
+    public function render()
+    {
+        return view('livewire.form-contact');
+    }
+}
