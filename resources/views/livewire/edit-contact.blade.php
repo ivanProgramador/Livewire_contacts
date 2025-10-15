@@ -1,7 +1,9 @@
 
 <div class="container">
      <div class="row justify-content-center">
-         <div class="col sm-4">
+         <div class="col-sm-4">
+              <h3>Editar contato</h3>
+              <hr>
              <div class="card p-5">
 
               <form  wire:submit="updateContact">
@@ -59,6 +61,10 @@
                             @endif
 
               </form>
+
+              @if(session()->has('error'))
+                 <div class="alert alert-danger text-center mt-3">{{ session('error') }}</div>
+              @endif
           </div>    
         </div>
      </div>
