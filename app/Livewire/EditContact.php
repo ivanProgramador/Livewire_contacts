@@ -42,15 +42,10 @@ class EditContact extends Component
         $this->validate();
 
         //verificando se o nome e eo email ja existem na base
+
+        $contact = Contact::where('name',$this->name)->where('email',$this->email)->first();
         
-        $contact = Contact::where(function ($query) {
-                        $query->where('name', $this->name)
-                              ->orWhere('email', $this->email);
-                    })
-                    ->where('id', '!=', $this->contact->id)
-                    ->first();
-
-
+    
         if($contact){
             session()->flash('error','o contato já existe');
             return;
