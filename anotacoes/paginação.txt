@@ -1,0 +1,72 @@
+A paginação é necessária para organizar a exibição de dados 
+aplicando a paginação o componente que mostra um lista de dados 
+que seram paginados
+
+pra isso eu preciso de trés alteraçoes
+
+1 - importar a diretiva 
+  use Livewire\WithPagination;
+
+2 - colocar a contante dentro da classe 
+  use WithPagination;
+
+3 - selecionar os contatos e mandar eles com a view e indicando o numero de dados por pagina
+    no caso abaixo são 5.  
+
+  return view('livewire.contacts')->with('contacts',Contact::paginate(5));
+
+aplicando
+
+-------------------------------------------------------------------------------------
+class Contacts extends Component
+{
+    use WithPagination;
+
+    #[On('contactAdded')]
+
+    public function updateContactList(){}
+
+   
+
+    public function render()
+    {
+        return view('livewire.contacts')->with('contacts',Contact::paginate(5));
+    }
+}
+---------------------------------------------------------------
+mas se eu tiver mais contato no meu registro que preciso de uma jeito de navegar entre eles  
+quando existe uma macanica de paginação ativada dentro do componente fica disponivel 
+uma função chamda links que cria um elemento html com os links e numeração de paginas
+para que seja possivel navegar, para mostrar essa paginação embaixo da lista eu coloquei essa div 
+embaixo da lista 
+ <div>
+          {{ $contacts->links() }}
+ </div>
+
+ inicialmenet ele não vai ficar com um layout daptado porque ele usa tailwind 
+ e eo meu projeto usa bootsrap 
+
+ Como resolver 
+ 1- criar um arquivo de configuração para o livewire o comando abaxo é especifico pra isso 
+
+     php artisan livewire:publish --config
+
+ 2 -  acessar a configuração essa é a ultima linha de cofgiração do arquivo  
+     
+     'pagination_theme' => 'tailwind',
+
+ 3 - e trocar a biblioteca pelo bootstrap
+
+     'pagination_theme' => 'bootstrap',
+
+Então ele vai assumir um layout compativel com a minha aplicação usando a minha biblioteca 
+fazendo com que o layout se torne uniforme.O livewire ja espera que a s bibliotecas seajm modificadas 
+por isso no nucleo dele ja existe uma configuração pronta. 
+
+
+
+
+
+
+
+

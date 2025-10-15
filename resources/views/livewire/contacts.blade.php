@@ -14,13 +14,16 @@
                   <div class="col">E-mail:   {{$contact->email}}</div>
                   <div class="col">Telefone: {{$contact->phone}}</div>
                   <div class="col">
-                     <a class="btn btn-sm btn-warning" href="{{ route('contacts.edit',['id'=>$contact->id ]) }}">Editar</a>
-                     <a class="btn btn-sm btn-danger" href="{{ route('contacts.delete',['id'=>$contact->id ]) }}">Deletar</a>
+                    <a  class="btn btn-sm btn-warning" href="{{ route('contacts.edit',['id'=>$contact->id ]) }}">Editar</a>
+                    <a class="btn btn-sm btn-danger" href="{{ route('contacts.delete',['id'=>$contact->id ]) }}">Deletar</a>
                     
                   </div>
              </div>
          </div>
        @endforeach
+       <div>
+          {{ $contacts->links() }}
+       </div>
     @endif
    
 
