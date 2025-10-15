@@ -1,0 +1,84 @@
+Sistema de pesquisa dinamica sem refresh a preimeira coisa a se fazer 
+é colocar na view o campo onde essa pesquisa será realizada.Em uma pesquisa 
+dinamica a quantidade de contatos por pagina por de ser dinamica porque 
+podem ter varios resultados ou somente um que correpondam aos termos de busca
+por isso eu criei a variável "$contactsPerPage = 5; " ja a variavel "$search"
+vai receber os termos de busca. A terceira varivel vai ser a contacts esse vai receber
+os contatos , mas dentro da função de busca ela inicia como nula.   
+
+public string $search = '';
+
+$contactsPerPage = 5; 
+
+$contacts = null 
+
+Como a busca funciona
+
+ Tudo começa com um teste do campo search que esta ligado a variável atraves  da função
+ wire:model ="search" e toda vez que esse campo receber um valor ele vai disparar uma consulta 
+ na base de dados baseado no conteudo dele.
+ aqui eu estou fazendo uma busca usando o like que vai procurar no inicio e no fim de cada palavra 
+ o meu termo de pesquisa isso eu eu faço com email e telefone também    
+
+ Contact::where('name','like','%'.$this->search.'%')
+
+ caso nada seja pesquisado o componete so vai exbir a lista normalmente 
+
+ $contacts = Contact::paginate($this->contactsPerPage);
+
+aplicando 
+---------------------------------------------------------------------------
+
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Contact;
+use Livewire\Component;
+use Livewire\Attributes\On;
+use Livewire\WithPagination;
+
+class Contacts extends Component
+{
+    use WithPagination;
+
+    public string $search = '';
+    private int $contactsPerPage = 5;
+
+
+
+    #[On('contactAdded')]
+
+    public function updateContactList(){}
+
+   
+
+    public function render()
+    {
+        $contacts = null; 
+        if($this->search){
+            $contacts = Contact::where('name','like','%'.$this->search.'%')
+                                 ->orWhere('email','like'.$this->search.'%')
+                                 ->orWhere('phone','like'.$this->search.'%')
+                                 ->paginate($this->contactsPerPage);
+        }else{
+
+            $contacts = Contact::paginate($this->contactsPerPage);
+        }
+        return view('livewire.contacts')->with('contacts',$contacts);
+    }
+}
+-------------------------------------------------------------------------------
+termo novo
+  wire:model.live ="search"
+o termo live avisa aoa live wire que isso tem qua ser feito em tempo real 
+se não tiver o ".live" a atela não vai atualizar a cada termo digitado no campo de busca 
+
+
+
+
+
+       
+
+  
+  

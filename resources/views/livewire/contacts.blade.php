@@ -1,6 +1,17 @@
 <div class="card p-5">
+   <div class="d-flex justify-content-between mb-3">
+      <div>
+          <p class="mb-3">Contacts</p>
+      </div>
+      <div>
+         <div class="d-flex gap-2 align-items-center">
+            <span>Busca:</span>
+            <input wire:model.live="search" type="text" class="form-control form-control-sm">
+         </div>
 
-    <p class="mb-3">Contacts</p>
+      </div>
+   </div>
+   
 
     @if($contacts->count() === 0 )
 
