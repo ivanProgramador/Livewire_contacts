@@ -39,11 +39,11 @@
            let data = event.detail;
 
             Swal.fire({
-            position: data.position
-            title: data.title,
-            text: 'Do you want to continue',
-            icon: data.type,
-            confirmButtonText: 'Cool'
+                position: data.position,
+                icon: data.type,
+                title: data.title,
+                showConfirmButton: false,
+                timer: 2000
            })
        });
        
