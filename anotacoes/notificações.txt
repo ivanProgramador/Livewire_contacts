@@ -3,7 +3,109 @@ o problema é que depois desses 2 segundos ela some e não volta  amanos que rec
 pra corrigir isso eu vou precisar usar uma lib externa chamada  sweet alert 2 
 que esta diponivel em https://sweetalert2.github.io/ 
 
-para implementar essa classe no projeto primeiro eu tenh que colocar ela no componte principal app.blade
+para implementar essa classe no projeto primeiro eu tenh que colocar ela no componte principal app.blade,
+nesse caso estou usnaod o cdn mas existem formas de baixar o instalar essa lib 
+
+
+esse linha deve ficar abaixo da tag body 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+depois de fazer isso a lib e seus componetes vão ficar disponiveis para todas as paginas 
+que usaram esse componete, pra disparar um evento eu uso a função padrão dispatch 
+
+A logica é se ocontato fo adicionado eu disparo o evento "  $this->dispatch('contactAdded'); "
+o componente escuta e solta a notificação.
+
+Mas nesse caso ao inves de só soltar a notificação o dispatch vai mandar um objeto
+junto e soltar tambem um evento chamado 'notification' para que e seja lido la na view 
+como se trata de uma lib ela tem parametros como 
+tipo de notificação, titulo, a posição de tela, e tudo isso eu vou mandar junto com meu dispatch    
+
+  $this->dispatch(
+                'notification',
+                type: 'success',
+                title:'Contato cadastrado',
+                position:'center'
+            );
+
+se der certo adicionar o tipo de notificação vai ser "success" 
+
+ $this->dispatch(
+                'notification',
+                type: 'success',  <===== AQUI 
+                title:'Contato cadastrado',
+                position:'center'
+            );
+
+se não der certo o tipo de notificação vai ser "error"
+
+ 
+             $this->dispatch(
+                'notification',
+                type: 'error', <==== AQUI 
+                title:'Contato já existe',
+                position:'center'
+            );
+
+quando isso chegar na view eu tenho que usar o js para receber os dados do evento 
+o "window.addEventListener()" vai escutar a "notification" e executar uma arrow 
+que pega os dados do evento qua mandei atraves do dispatch e preeche os dados da notificação 
+e mostra na tela   
+
+ <script>
+
+       window.addEventListener('notification',(event)=>{
+
+           let data = event.detail; <=== pegando os dados do dispatch 
+
+
+        passando as configurações da notificação 
+        
+            Swal.fire({
+                position: data.position,
+                icon: data.type,
+                title: data.title,
+                showConfirmButton: false,
+                timer: 2000
+           })
+       });
+       
+    </script>
+
+
+
+
+
+
+
+
+ if($result->wasRecentlyCreated){
+
+             
+             $this->reset();         
+            
+            $this->dispatch('contactAdded');
+            $this->dispatch(
+                'notification',
+                type: 'success',
+                title:'Contato cadastrado',
+                position:'center'
+            );
+
+        }else{
+
+             $this->dispatch(
+                'notification',
+                type: 'error',
+                title:'Contato já existe',
+                position:'center'
+            );
+        }
+
+
+
+
 
 
 
