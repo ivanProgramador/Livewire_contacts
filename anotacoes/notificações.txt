@@ -1,0 +1,9 @@
+Pra avisar que o contato foi cadastrado com sucesso eu mostro a mensagem por  2 segundos e depois ela some da tela,
+o problema é que depois desses 2 segundos ela some e não volta  amanos que recarregue a página. Nesse caso 
+pra corrigir isso eu vou precisar usar uma lib externa chamada  sweet alert 2 
+que esta diponivel em https://sweetalert2.github.io/ 
+
+para implementar essa classe no projeto primeiro eu tenh que colocar ela no componte principal app.blade
+
+
+

@@ -30,30 +30,22 @@
         <div class="text-end">
             <button class="btn btn-secondary px-5">Gravar</button>
         </div>
-
-        @if($error)
-           <div class="alert-danger text-center mt-5"
-             x-data="{ show:true}"
-             x-show="show"
-             x-init="setTimeout(()=> show = false, 2000)"
-           >
-               {{ $error }}
-           </div>
-        
-        @endif
-
-        
-        @if($success)
-           <div class="alert-success text-center mt-5"
-             x-data="{ show:true}"
-             x-show="show"
-             x-init="setTimeout(()=> show = false, 2000)"
-           >
-               {{ $success }}
-           </div>
-        @endif
-
-
-            
     </form>
+
+    <script>
+
+       window.addEventListener('notification',(event)=>{
+
+           let data = event.detail;
+
+            Swal.fire({
+            position: data.position
+            title: data.title,
+            text: 'Do you want to continue',
+            icon: data.type,
+            confirmButtonText: 'Cool'
+           })
+       });
+       
+    </script>
 </div>
